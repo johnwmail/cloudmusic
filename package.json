@@ -1,0 +1,29 @@
+{
+  "name": "go-music-cloudflare",
+  "version": "1.0.0",
+  "description": "Music browser and streaming API for Cloudflare Workers/Pages",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/bundle.js && wrangler dev --port 8787",
+    "build": "node scripts/bundle.js",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src",
+    "pages:deploy": "wrangler pages deploy dist/pages --project-name go-music"
+  },
+  "dependencies": {
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.5.0",
+    "@cloudflare/workers-types": "^4.20241112.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.14.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.14.0",
+    "vitest": "^2.1.0",
+    "wrangler": "^3.87.0"
+  }
+}

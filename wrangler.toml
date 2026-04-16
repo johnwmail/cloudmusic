@@ -1,0 +1,39 @@
+name = "music"
+main = "dist/worker.mjs"
+compatibility_date = "2024-11-12"
+compatibility_flags = ["nodejs_compat"]
+
+# Build command
+[build]
+command = "node scripts/bundle.js"
+watch_dir = ["src/", "static/"]
+
+# R2 bucket binding for music storage
+[[r2_buckets]]
+binding = "MUSIC_BUCKET"
+bucket_name = "music-bucket"
+
+# Environment variables
+[vars]
+S3_PREFIX = ""
+MIN_SEARCH_STR = "1"
+MAX_SEARCH_RESULT = "100"
+VERSION = "vDev"
+BUILD_TIME = "now"
+COMMIT_HASH = "dev"
+
+# Production environment overrides
+[env.production]
+name = "music-prod"
+
+[[env.production.r2_buckets]]
+binding = "MUSIC_BUCKET"
+bucket_name = "music-bucket"
+
+[env.production.vars]
+S3_PREFIX = ""
+MIN_SEARCH_STR = "1"
+MAX_SEARCH_RESULT = "100"
+VERSION = "vDev"
+BUILD_TIME = "now"
+COMMIT_HASH = "dev"
