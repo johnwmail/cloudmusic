@@ -24,7 +24,7 @@ COMMIT_HASH = "dev"
 
 # Production environment overrides
 [env.production]
-name = "music-prod"
+name = "music"
 
 [[env.production.r2_buckets]]
 binding = "MUSIC_BUCKET"
