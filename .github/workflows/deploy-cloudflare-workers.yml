@@ -35,7 +35,8 @@ jobs:
     permissions:
       contents: read
       deployments: write
-    steps:      - uses: actions/checkout@v5
+    steps:
+      - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v7
         with:
