@@ -1,4 +1,4 @@
-# go-music - Cloudflare Edition
+# cloudmusic - Cloudflare Edition
 
 [![Original Go Version](https://img.shields.io/badge/Original-Go-blue.svg)](https://github.com/johnwmail/go-music)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -19,7 +19,7 @@ A serverless music browser and streaming API migrated from Go to **Cloudflare Wo
 <a id="overview"></a>
 ## Overview
 
-This is a TypeScript migration of the original [go-music](https://github.com/johnwmail/go-music) project, designed to run on Cloudflare's edge network:
+This is a TypeScript migration of the original [cloudmusic](https://github.com/johnwmail/cloudmusic) project, designed to run on Cloudflare's edge network:
 
 - **Cloudflare Workers** - Backend API & Frontend static hosting (replaces Go + AWS Lambda)
 - **Cloudflare R2** - Object storage (replaces AWS S3)
@@ -65,8 +65,8 @@ This is a TypeScript migration of the original [go-music](https://github.com/joh
 
 ```bash
 # Clone and install
-git clone https://github.com/johnwmail/go-music.git
-cd go-music
+git clone https://github.com/johnwmail/cloudmusic.git
+cd cloudmusic
 npm install
 
 # Login to Cloudflare
@@ -199,7 +199,7 @@ The project uses an ESLint 9 flat config, so `npm run lint` works without extra 
 ### Project Structure
 
 ```
-go-music/
+cloudmusic/
 ├── src/
 │   ├── worker-with-assets.ts   # Worker entry point (bundled)
 │   ├── types.ts                # TypeScript types

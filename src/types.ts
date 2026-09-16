@@ -1,4 +1,4 @@
-// Types for the Cloudflare migration of go-music
+// Types for the Cloudflare migration of cloudmusic
 
 export interface Env {
   MUSIC_BUCKET: R2Bucket;
