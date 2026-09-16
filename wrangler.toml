@@ -40,7 +40,7 @@ COMMIT_HASH = "dev"
 
 # Staging / UAT environment overrides
 [env.uat]
-name = "music"
+name = "music-uat"
 
 [[env.uat.r2_buckets]]
 binding = "MUSIC_BUCKET"
