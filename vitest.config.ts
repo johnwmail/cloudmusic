@@ -1,22 +1,16 @@
 import { defineConfig } from "vitest/config";
-import { resolve } from "path";
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
 
 export default defineConfig({
+  plugins: [
+    cloudflareTest({
+      wrangler: { configPath: "./wrangler.toml" },
+      main: "./src/worker-with-assets.ts",
+      modulesRules: [{ type: "ESModule", include: ["**/*.ts"] }],
+    }),
+  ],
   test: {
     globals: true,
-    pool: "@cloudflare/vitest-pool-workers",
     include: ["src/**/*.test.ts"],
-    poolOptions: {
-      workers: {
-        wrangler: { configPath: "./wrangler.toml" },
-        main: "./src/worker-with-assets.ts",
-        modulesRules: [{ type: "ESModule", include: ["**/*.ts"] }],
-      },
-    },
-  },
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "./src"),
-    },
   },
 });

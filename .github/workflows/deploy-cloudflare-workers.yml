@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Test
@@ -32,8 +35,7 @@ jobs:
     permissions:
       contents: read
       deployments: write
-    steps:
-      - uses: actions/checkout@v5
+    steps:      - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v7
         with:
