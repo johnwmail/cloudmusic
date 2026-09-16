@@ -58,7 +58,7 @@ jobs:
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: deploy --env uat
+          command: versions upload --env uat
 
   deploy-production:
     name: Deploy to Production
@@ -94,4 +94,4 @@ jobs:
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: deploy --env production
+          command: deploy
