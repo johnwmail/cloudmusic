@@ -5,6 +5,9 @@ export interface Env {
   S3_PREFIX: string;
   MIN_SEARCH_STR: string;
   MAX_SEARCH_RESULT: string;
+  VERSION: string;
+  BUILD_TIME: string;
+  COMMIT_HASH: string;
 }
 
 export interface ApiRequest {

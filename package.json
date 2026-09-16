@@ -14,16 +14,16 @@
     "pages:deploy": "wrangler pages deploy dist/pages --project-name cloudmusic"
   },
   "dependencies": {
-    "hono": "^4.6.0"
+    "hono": "^4.13.8"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "^0.5.0",
-    "@cloudflare/workers-types": "^4.20241112.0",
-    "esbuild": "^0.24.0",
-    "eslint": "^9.14.0",
-    "typescript": "^5.6.0",
-    "typescript-eslint": "^8.14.0",
-    "vitest": "^2.1.0",
-    "wrangler": "^3.87.0"
+    "@cloudflare/vitest-pool-workers": "^0.22.0",
+    "@cloudflare/workers-types": "^5.20260916.1",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.10.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.132.0"
   }
 }
