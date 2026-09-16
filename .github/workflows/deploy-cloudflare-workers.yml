@@ -24,12 +24,11 @@ jobs:
 
       - run: npm test
 
-  deploy-uat:
-    name: Deploy to UAT
+  deploy-preview:
+    name: Deploy Preview
     needs: test
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
-    environment: uat
     permissions:
       contents: read
       deployments: write
@@ -45,20 +44,20 @@ jobs:
 
       - name: Set build vars in wrangler.toml
         run: |
-          VERSION="uat-${GITHUB_SHA::7}"
+          VERSION="preview-${GITHUB_SHA::7}"
           BUILD_TIME="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           COMMIT_HASH="${GITHUB_SHA::7}"
           sed -i "s/^VERSION = .*/VERSION = \"${VERSION}\"/" wrangler.toml
           sed -i "s/^BUILD_TIME = .*/BUILD_TIME = \"${BUILD_TIME}\"/" wrangler.toml
           sed -i "s/^COMMIT_HASH = .*/COMMIT_HASH = \"${COMMIT_HASH}\"/" wrangler.toml
-          echo "Deploying to UAT: VERSION=${VERSION} BUILD_TIME=${BUILD_TIME} COMMIT_HASH=${COMMIT_HASH}"
+          echo "Uploading preview: VERSION=${VERSION} BUILD_TIME=${BUILD_TIME} COMMIT_HASH=${COMMIT_HASH}"
           cat wrangler.toml
 
-      - name: Deploy to Cloudflare (UAT)
+      - name: Upload preview version to Cloudflare
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: versions upload --env uat
+          command: versions upload
 
   deploy-production:
     name: Deploy to Production
