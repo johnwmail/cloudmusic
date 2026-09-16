@@ -6,6 +6,7 @@ on:
     tags: ['v*']
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -26,8 +27,44 @@ jobs:
 
       - run: npm test
 
-  deploy:
-    name: Deploy
+  deploy-uat:
+    name: Deploy to UAT
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    environment: uat
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
+          cache: npm
+
+      - run: npm ci
+
+      - name: Set build vars in wrangler.toml
+        run: |
+          VERSION="uat-${GITHUB_SHA::7}"
+          BUILD_TIME="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          COMMIT_HASH="${GITHUB_SHA::7}"
+          sed -i "s/^VERSION = .*/VERSION = \"${VERSION}\"/" wrangler.toml
+          sed -i "s/^BUILD_TIME = .*/BUILD_TIME = \"${BUILD_TIME}\"/" wrangler.toml
+          sed -i "s/^COMMIT_HASH = .*/COMMIT_HASH = \"${COMMIT_HASH}\"/" wrangler.toml
+          echo "Deploying to UAT: VERSION=${VERSION} BUILD_TIME=${BUILD_TIME} COMMIT_HASH=${COMMIT_HASH}"
+          cat wrangler.toml
+
+      - name: Deploy to Cloudflare (UAT)
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy --env uat
+
+  deploy-production:
+    name: Deploy to Production
     needs: test
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
@@ -53,10 +90,10 @@ jobs:
           sed -i "s/^VERSION = .*/VERSION = \"${VERSION}\"/" wrangler.toml
           sed -i "s/^BUILD_TIME = .*/BUILD_TIME = \"${BUILD_TIME}\"/" wrangler.toml
           sed -i "s/^COMMIT_HASH = .*/COMMIT_HASH = \"${COMMIT_HASH}\"/" wrangler.toml
-          echo "Deploying: VERSION=${VERSION} BUILD_TIME=${BUILD_TIME} COMMIT_HASH=${COMMIT_HASH}"
+          echo "Deploying to Production: VERSION=${VERSION} BUILD_TIME=${BUILD_TIME} COMMIT_HASH=${COMMIT_HASH}"
           cat wrangler.toml
 
-      - name: Deploy to Cloudflare
+      - name: Deploy to Cloudflare (Production)
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
